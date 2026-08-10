@@ -1,0 +1,59 @@
+<div class="status-widget">
+  <div class="widget-header">
+    <div class="header-content">
+      <h2>Connection Tracking</h2>
+      <p>Real-time telemetry of your Torrent Gas installation</p>
+    </div>
+    <div class="status-summary">
+      <span class="pulse-dot"></span>
+      <span>In Progress</span>
+    </div>
+  </div>
+
+  <div class="timeline-wrapper">
+    <div class="timeline-step" *ngFor="let step of trackingSteps; let last = last" [ngClass]="step.status">
+      
+      <!-- Timeline Node & Connector -->
+      <div class="step-indicator">
+        <div class="node-wrapper">
+          <div class="icon-circle">
+            <i [class]="step.icon"></i>
+          </div>
+        </div>
+        <!-- The line connecting to the next node -->
+        <div class="step-connector" *ngIf="!last"></div>
+      </div>
+
+      <!-- Card Content Area -->
+      <div class="step-content">
+        <div class="step-card">
+          <div class="card-header">
+            <div class="title-group">
+              <h3>{{ step.title }}</h3>
+              <span class="badge" *ngIf="step.status === 'completed'">Completed</span>
+              <span class="badge badge-active" *ngIf="step.status === 'active'">In Progress</span>
+              <span class="badge badge-pending" *ngIf="step.status === 'pending'">Awaiting</span>
+            </div>
+            
+            <div class="date-group" *ngIf="step.date">
+              <i class="ri-time-line"></i>
+              <span>{{ step.date }}</span>
+            </div>
+          </div>
+
+          <!-- Remarks Callout Block -->
+          <div class="remarks-block" *ngIf="step.remarks">
+            <div class="remarks-icon">
+              <i class="ri-message-3-line"></i>
+            </div>
+            <div class="remarks-text">
+              <strong>System Note:</strong>
+              <p>{{ step.remarks }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="portal-menu-wrapper">
+  <div class="menu-card">
+    
+    <!-- State 1: Main Categories -->
+    <div *ngIf="!selectedParent" class="view-container fade-in">
+      <div class="menu-header">
+        <h2>Select Login Portal</h2>
+        <p>Choose your designated access area</p>
+      </div>
+
+      <div class="options-grid">
+        <button 
+          *ngFor="let parent of menuConfig" 
+          (click)="selectParent(parent)" 
+          class="card-btn parent-card">
+          <div class="icon-wrapper">
+            <i [class]="parent.icon"></i>
+          </div>
+          <div class="text-content">
+            <span class="title">{{ parent.label }}</span>
+            <span class="description">{{ parent.description }}</span>
+          </div>
+          <i class="ri-arrow-right-s-line chevron"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- State 2: Drill-down / Sub-categories -->
+    <div *ngIf="selectedParent" class="view-container slide-in">
+      
+      <div class="menu-header child-header">
+        <button class="btn-back" (click)="goBack()">
+          <i class="ri-arrow-left-s-line"></i> Back
+        </button>
+        <div class="active-title-group">
+          <i [class]="selectedParent.icon"></i>
+          <h2>{{ selectedParent.label }}</h2>
+        </div>
+      </div>
+
+      <div class="options-list">
+        <a 
+          *ngFor="let child of selectedParent.children" 
+          [routerLink]="child.route" 
+          class="card-btn child-card">
+          <i [class]="child.icon" class="child-icon"></i>
+          <span class="title">{{ child.label }}</span>
+          <i class="ri-arrow-right-line action-icon"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>

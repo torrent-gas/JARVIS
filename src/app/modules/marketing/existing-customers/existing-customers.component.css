@@ -1,0 +1,261 @@
+:host {
+  display: block;
+}
+.customers-page {
+  max-width: 1440px;
+  margin: auto;
+  color: #17233b;
+}
+.crumb {
+  font-size: 0.82rem;
+  color: #718096;
+  margin-bottom: 14px;
+}
+.crumb i {
+  vertical-align: middle;
+}
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 22px;
+}
+.page-head h1 {
+  font-size: 1.8rem;
+  margin: 0 0 6px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+.page-head p {
+  margin: 0;
+  color: #6d7a90;
+}
+.outline-btn,
+.text-btn {
+  background: white;
+  border: 1px solid #dce5f0;
+  border-radius: 8px;
+  padding: 9px 13px;
+  color: #155aa5;
+  font-weight: 600;
+}
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.kpi,
+.filter-card,
+.table-card {
+  background: #fff;
+  border: 1px solid #e6edf5;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px #264b7710;
+}
+.kpi {
+  padding: 15px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.kpi i {
+  font-size: 1.45rem;
+  padding: 10px;
+  border-radius: 10px;
+  background: #edf5ff;
+}
+.kpi .green {
+  background: #ecf9ef;
+  color: #18824b;
+}
+.kpi .amber {
+  background: #fff6e7;
+  color: #b86b0d;
+}
+.kpi small,
+.kpi b {
+  display: block;
+}
+.kpi small {
+  color: #718096;
+}
+.kpi b {
+  font-size: 1.3rem;
+  margin-top: 2px;
+}
+.filter-card {
+  padding: 16px;
+  margin-bottom: 18px;
+}
+.search {
+  border: 1px solid #d7e1ee;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  margin-bottom: 12px;
+}
+.search i {
+  color: #7a899e;
+}
+.search input {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  padding: 11px 9px;
+  font-size: 0.92rem;
+}
+.filters {
+  display: flex;
+  gap: 10px;
+}
+.filters select,
+.table-bar select {
+  border: 1px solid #dbe4ef;
+  border-radius: 7px;
+  background: white;
+  padding: 8px;
+  color: #435168;
+  min-width: 140px;
+}
+.text-btn {
+  margin-left: auto;
+  color: #62728a;
+  padding: 7px;
+  border: 0;
+}
+.table-card {
+  overflow: hidden;
+}
+.table-bar,
+.pagination {
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.table-bar strong {
+  font-size: 1rem;
+}
+.table-bar > span {
+  font-size: 0.82rem;
+  color: #718096;
+}
+.table-bar label {
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: #718096;
+}
+.table-scroll {
+  overflow: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 950px;
+}
+th {
+  text-align: left;
+  background: #f7f9fc;
+  color: #718096;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 12px 18px;
+}
+td {
+  border-top: 1px solid #edf1f5;
+  padding: 14px 18px;
+  font-size: 0.87rem;
+  color: #3f4d63;
+}
+td a {
+  color: #125ca7;
+  text-decoration: none;
+  font-weight: 650;
+}
+td small {
+  color: #7d8ba0;
+  font-size: 0.74rem;
+}
+td > small {
+  display: block;
+  margin-top: 3px;
+}
+code {
+  font-size: 0.78rem;
+  color: #54657d;
+}
+.badge {
+  background: #e8f7ee;
+  color: #187c45;
+  border-radius: 20px;
+  padding: 5px 9px;
+  font-size: 0.74rem;
+  font-weight: 650;
+}
+.badge.warn {
+  background: #fff3df;
+  color: #a95b02;
+}
+.row-action {
+  white-space: nowrap;
+}
+.pagination {
+  justify-content: space-between;
+  border-top: 1px solid #edf1f5;
+  font-size: 0.82rem;
+  color: #718096;
+}
+.pagination div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pagination button {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #dce5ee;
+  background: white;
+  border-radius: 6px;
+  color: #315275;
+}
+.pagination button:disabled {
+  opacity: 0.4;
+}
+@media (max-width: 850px) {
+  .customers-page {
+    padding: 0;
+  }
+  .page-head {
+    align-items: flex-start;
+    gap: 12px;
+    flex-direction: column;
+  }
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+  .filters {
+    flex-wrap: wrap;
+  }
+  .filters select {
+    flex: 1;
+    min-width: 145px;
+  }
+  .text-btn {
+    margin-left: 0;
+  }
+}
+
+.btn-primary-custom {
+    background: #0f172a;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}

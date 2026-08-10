@@ -1,0 +1,299 @@
+:host {
+  --tg-blue: #0054A6;
+  --tg-blue-light: #e6f0fa;
+  --tg-green: #78C043;
+  --tg-green-light: #f1f9ec;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+  --bg-app: #f8fafc;
+  
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.status-widget {
+  background: var(--bg-app);
+  padding: 2.5rem;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+/* Header Section */
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.header-content h2 {
+  color: var(--text-main);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header-content p {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.status-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--tg-blue);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--tg-blue);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(0, 84, 166, 0.4);
+  animation: dotPulse 2s infinite;
+}
+
+/* Timeline Core */
+.timeline-wrapper {
+  position: relative;
+}
+
+.timeline-step {
+  display: flex;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.timeline-step:last-child {
+  margin-bottom: 0;
+}
+
+/* Indicators & Lines */
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.node-wrapper {
+  background: var(--bg-app);
+  padding-bottom: 0.5rem;
+  z-index: 2;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  background-color: #ffffff;
+  border: 2px solid var(--border-light);
+  color: #94a3b8;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-connector {
+  width: 3px;
+  flex-grow: 1;
+  background-color: var(--border-light);
+  margin-top: -8px;
+  margin-bottom: -32px;
+  border-radius: 2px;
+  z-index: 1;
+  transition: background-color 0.4s ease;
+}
+
+/* Step Cards */
+.step-content {
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}
+
+.step-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title-group h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Badges */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background-color: var(--tg-green-light);
+  color: #4d8228;
+  border: 1px solid rgba(120, 192, 67, 0.2);
+}
+
+.badge-active {
+  background-color: var(--tg-blue-light);
+  color: var(--tg-blue);
+  border: 1px solid rgba(0, 84, 166, 0.2);
+}
+
+.badge-pending {
+  background-color: #f1f5f9;
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+
+.date-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Remarks Block */
+.remarks-block {
+  margin-top: 1.25rem;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  gap: 1rem;
+  border: 1px solid var(--border-light);
+}
+
+.remarks-icon {
+  color: var(--tg-blue);
+  font-size: 1.25rem;
+  margin-top: 2px;
+}
+
+.remarks-text {
+  flex-grow: 1;
+}
+
+.remarks-text strong {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+.remarks-text p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* --- STATE MODIFIERS --- */
+
+/* Completed State */
+.timeline-step.completed .icon-circle {
+  background-color: var(--tg-green);
+  border-color: var(--tg-green);
+  color: white;
+  box-shadow: 0 4px 12px rgba(120, 192, 67, 0.25);
+}
+
+.timeline-step.completed .step-connector {
+  background-color: var(--tg-green);
+}
+
+/* Active State */
+.timeline-step.active .icon-circle {
+  background-color: var(--tg-blue);
+  border-color: var(--tg-blue);
+  color: white;
+  box-shadow: 0 0 0 4px var(--tg-blue-light);
+}
+
+.timeline-step.active .step-card {
+  border-color: var(--tg-blue-light);
+  box-shadow: 0 4px 12px rgba(0, 84, 166, 0.08);
+}
+
+/* Pending State */
+.timeline-step.pending .step-card {
+  opacity: 0.6;
+  background-color: transparent;
+  box-shadow: none;
+}
+.timeline-step.pending .step-card:hover {
+  transform: none;
+  opacity: 0.8;
+}
+
+/* Animations */
+@keyframes dotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 84, 166, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(0, 84, 166, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 84, 166, 0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .status-widget {
+    padding: 1.5rem;
+  }
+  
+  .widget-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .title-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "plantName": "Plant A - Main Boiler Unit",
+  "kpis": [
+    { "title": "Current Pressure", "value": "4.2 bar", "sub": "Stable Range (4.0 - 4.5 bar)", "alert": false },
+    { "title": "Minimum Pressure", "value": "3.1 bar", "sub": "Recorded at 03:15 (Shift C)", "alert": true },
+    { "title": "Maximum Pressure", "value": "4.8 bar", "sub": "Within Safe Threshold (< 5.0 bar)", "alert": false },
+    { "title": "Pressure Stability", "value": "96.8%", "sub": "Optimal Line Regulation", "alert": false }
+  ],
+  "pressureTimeline": {
+    "labels": ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00"],
+    "actual": [4.2, 3.8, 3.1, 4.4, 4.5, 4.3, 4.2, 4.1],
+    "thresholdMin": [3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5],
+    "thresholdMax": [4.8, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8]
+  },
+  "pressureDistribution": {
+    "labels": ["Optimal (4.0-4.5 bar)", "Low Warning (<3.5 bar)", "High Spike (>4.6 bar)"],
+    "data": [85, 10, 5]
+  },
+  "lowPressureEvents": [
+    { "timestamp": "2026-06-06 03:15", "duration": "25 mins", "minPressure": "3.1 bar", "impact": "Boiler 2 Pilot Flame Fluctuation", "status": "Resolved" },
+    { "timestamp": "2026-06-04 02:40", "duration": "15 mins", "minPressure": "3.3 bar", "impact": "Minor Thermal Output Drop", "status": "Resolved" }
+  ],
+  "events": [
+    { "eventId": "PR-9012", "timestamp": "2026-06-06 03:15", "type": "Low Pressure Drop", "severity": "Warning", "pressureVal": "3.1 bar", "actionTaken": "Regulator valve auto-adjusted by SCADA" },
+    { "eventId": "PR-9011", "timestamp": "2026-06-05 14:20", "type": "High Pressure Spike", "severity": "Info", "pressureVal": "4.8 bar", "actionTaken": "Safe relief parameters verified" },
+    { "eventId": "PR-9010", "timestamp": "2026-06-03 22:10", "type": "Low Pressure Drop", "severity": "Critical", "pressureVal": "2.9 bar", "actionTaken": "Main pipeline header checked with utility provider" }
+  ]
+}

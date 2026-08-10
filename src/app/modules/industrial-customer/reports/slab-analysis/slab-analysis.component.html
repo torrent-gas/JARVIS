@@ -1,0 +1,44 @@
+<div class="industrial-dashboard" [class.embedded]="embedded">
+  
+  <!-- Corporate Header -->
+  <header class="brand-header" *ngIf="!embedded">
+    <div class="logo-area">
+      <span class="badge-torrent">TORRENT GAS - TARIFF SLAB MODULE</span>
+      <h1>Daily Consumption Segregation by Pricing Slabs</h1>
+      <p class="customer-subtitle text-muted mt-1">Customer: <strong>{{ customerName }}</strong> (August 2026)</p>
+    </div>
+  </header>
+
+  <!-- Slab Summary KPI Cards -->
+  <section class="kpi-grid">
+    <div class="kpi-card accent-green">
+      <span class="kpi-title">MGO Slab (≤ 300 MMBTU)</span>
+      <h2>{{ mgoTotal | number:'1.2-2' }} MMBTU</h2>
+      <span class="kpi-sub">Standard Tariff Rate</span>
+    </div>
+    <div class="kpi-card">
+      <span class="kpi-title">Non-MGO Slab (300 - 500 MMBTU)</span>
+      <h2>{{ nonMgoTotal | number:'1.2-2' }} MMBTU</h2>
+      <span class="kpi-sub">Secondary Rate Tier</span>
+    </div>
+    <div class="kpi-card alert-card">
+      <span class="kpi-title">Excess Slab (> 500 MMBTU)</span>
+      <h2>{{ excessTotal | number:'1.2-2' }} MMBTU</h2>
+      <span class="kpi-sub text-danger">Exceeding MDCQ Cap</span>
+    </div>
+  </section>
+
+  <!-- Bar Chart Analysis Section -->
+  <div class="dashboard-grid full-width">
+    <div class="card">
+      <div class="card-header">
+        <h3>Daily Pricing Slab Distribution</h3>
+        <span class="tag">Stacked View: MGO vs Non-MGO vs Excess</span>
+      </div>
+      <div class="chart-container-large">
+        <canvas #slabBarCanvas></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>

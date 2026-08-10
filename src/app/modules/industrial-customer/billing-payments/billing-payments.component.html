@@ -1,0 +1,107 @@
+<div class="industrial-dashboard">
+  
+  <!-- Corporate Header -->
+  <header class="brand-header">
+    <div class="logo-area">
+      <span class="badge-torrent">TORRENT GAS - CGD INDUSTRIAL PORTAL</span>
+      <h1>Fortnightly PNG Billing, Payment Delays & Late Interest</h1>
+      <p class="customer-subtitle text-muted mt-1">Customer: <strong>WHEELS INDIA LIMITED (THERVOYKANDIGAI)</strong></p>
+    </div>
+    <div class="header-action">
+      <button class="btn-primary-custom" (click)="downloadInvoicePDF()">
+        <i class="fa-solid fa-file-pdf me-2"></i> Download Tax Invoice
+      </button>
+    </div>
+  </header>
+
+  <!-- Financial KPI Metrics Grid -->
+  <section class="kpi-grid">
+    <div class="kpi-card" *ngFor="let kpi of kpis" [class.accent-green]="kpi.isGreen">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <span class="kpi-title">{{ kpi.title }}</span>
+        <i [class]="kpi.icon + ' kpi-icon'" [class.text-success]="kpi.isGreen"></i>
+      </div>
+      <h2>{{ kpi.value }}</h2>
+      <span class="kpi-sub">{{ kpi.sub }}</span>
+    </div>
+  </section>
+
+  <!-- Row 1: Billing History & Invoice Breakdown -->
+  <div class="dashboard-grid mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h3>Fortnightly Billing vs Payment History</h3>
+        <span class="tag">Last 5 Cycles (₹ Lakhs)</span>
+      </div>
+      <div class="chart-container">
+        <canvas #billingCanvas></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Current Invoice Breakdown</h3>
+        <span class="tag">August 2026 (FN1)</span>
+      </div>
+      <div class="breakdown-list mt-2">
+        <div class="breakdown-item" *ngFor="let item of billBreakdown" [class.total-row]="item.total">
+          <span class="breakdown-label">{{ item.label }}</span>
+          <span class="breakdown-value">{{ item.amount }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Payment Delay Distribution Bar Chart & Ledger -->
+  <div class="dashboard-grid">
+    <div class="card">
+      <div class="card-header">
+        <h3>Payment Delay Distribution (Bar Chart)</h3>
+        <span class="tag">Extra Days Beyond 5 Business Days</span>
+      </div>
+      <div class="chart-container">
+        <canvas #delayBarCanvas></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Fortnightly Aging & 15.65% Interest Ledger</h3>
+        <span class="tag">0 Interest if Paid Within 5 Days</span>
+      </div>
+      <div class="table-responsive mt-2">
+        <table class="table modern-table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Billing Cycle</th>
+              <th>Due Date</th>
+              <th>Extra Delay</th>
+              <th>Late Interest (15.65% p.a.)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let log of agingLogs">
+              <td class="fw-bold text-dark">{{ log.cycle }}</td>
+              <td>{{ log.dueDate }}</td>
+              <td>
+                <span class="badge" [class.bg-success]="log.extraDays.includes('On Time')" [class.bg-warning]="!log.extraDays.includes('On Time')">
+                  {{ log.extraDays }}
+                </span>
+              </td>
+              <td class="fw-semibold" [class.text-danger]="log.interest !== '₹ 0.00'" [class.text-success]="log.interest === '₹ 0.00'">
+                {{ log.interest }}
+              </td>
+              <td>
+                <span class="status-pill" [class.pill-success]="log.status.includes('Paid')" [class.pill-warning]="log.status === 'Pending'">
+                  {{ log.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

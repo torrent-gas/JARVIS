@@ -1,0 +1,35 @@
+<div class="portal-wrapper">
+  <!-- Global Top Navbar & Filter Toolbar -->
+  <header class="global-filter-header">
+    <div class="brand-identity">
+      <span class="portal-badge">TORRENT GAS INDUSTRIAL PORTAL</span>
+      <h2>Enterprise Analytics Hub</h2>
+    </div>
+
+    <!-- Global Filter Controls -->
+    <div class="filter-toolbar">
+      <!-- Report Type Selector -->
+      <div class="filter-field">
+        <label>Report Type</label>
+        <select
+          [(ngModel)]="selectedReportType"
+          (change)="onGlobalFilterChange()"
+        >
+          <option value="flow-analysis">Consumption analysis - MGO & Flow Rate</option>
+          <option value="consumption">Consumption analysis - Price Slab</option>
+        </select>
+      </div>
+    </div> 
+  </header>
+
+  <!-- Dynamic Report Viewport -->
+  <main class="report-viewport">
+    <!-- Render Flow Analysis Report -->
+    <app-flow-analysis
+      *ngIf="selectedReportType === 'flow-analysis'"
+    ></app-flow-analysis>
+    <app-slab-analysis
+      *ngIf="selectedReportType === 'consumption'"
+    ></app-slab-analysis>
+  </main>
+</div>

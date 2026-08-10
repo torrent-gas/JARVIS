@@ -1,0 +1,190 @@
+<div class="customers-page">
+  <div class="crumb">
+    Marketing Portal <i class="ri-arrow-right-s-line"></i> Existing Customers
+  </div>
+  
+  <div class="page-head">
+    <div>
+      <h1>Existing Customers</h1>
+      <p>
+        Customer relationships, contracts, daily consumption, Master GCV controls, and MMBTU analytics in one workspace.
+      </p>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn-primary-custom" (click)="sendMorningDispatchNow()">
+        <i class="ri-mail-send-line me-1"></i> Trigger Morning Dispatch
+      </button>
+    </div>
+  </div>
+
+  <!-- Separate KPI Cards for Customer Status Breakdown -->
+  <div class="kpis">
+    <div class="kpi">
+      <i class="ri-team-line blue"></i>
+      <span><small>Total Customers</small><b>{{ totalCustomers }}</b></span>
+    </div>
+    <div class="kpi">
+      <i class="ri-shield-check-line green"></i>
+      <span><small>Commissioned Customers</small><b>{{ commissionedCustomers }}</b></span>
+    </div>
+    <div class="kpi">
+      <i class="ri-file-list-3-line amber"></i>
+      <span><small>Agreement Signed – Yet to Commission</small><b>{{ agreementYetToCommission }}</b></span>
+    </div>
+    <div class="kpi">
+      <i class="ri-alarm-warning-line purple"></i>
+      <span><small>Renewal Attention</small><b>4</b></span>
+    </div>
+  </div>
+
+  <!-- Master GCV Control Section -->
+  <section class="master-gcv-card card p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <span class="badge-master">MASTER TARIFF CONTROL</span>
+        <h3 class="card-title mt-1 mb-0">Master GCV (Gross Calorific Value)</h3>
+        <p class="text-muted small mb-0">Update the daily GCV once to recalculate MMBTU across commissioned industrial customers.</p>
+      </div>
+      <div class="text-end">
+        <span class="tag">Active Master GCV: <strong>{{ masterGcv }} kcal/SCM</strong></span>
+      </div>
+    </div>
+
+    <div class="master-gcv-grid">
+      <div class="form-group">
+        <label class="fw-bold">Master GCV (kcal/SCM)</label>
+        <input type="number" [(ngModel)]="tempMasterGcv" class="form-control fw-bold text-success">
+      </div>
+      <div class="form-group">
+        <label class="fw-bold">Effective Date</label>
+        <input type="text" [(ngModel)]="effectiveGcvDate" class="form-control">
+      </div>
+      <div class="form-group d-flex align-items-end">
+        <button class="btn-primary-custom w-100" (click)="applyMasterGcv()">
+          <i class="ri-check-line me-1"></i> Send / Apply Master GCV
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="filter-card">
+    <div class="search">
+      <i class="ri-search-line"></i>
+      <input
+        [(ngModel)]="search"
+        (ngModelChange)="resetPage()"
+        placeholder="Search name, ID, contract, email or phone"
+      />
+    </div>
+    <div class="filters">
+      <select [(ngModel)]="type" (ngModelChange)="resetPage()">
+        <option value="">Customer type</option>
+        <option>Industrial</option></select
+      ><select [(ngModel)]="industry" (ngModelChange)="resetPage()">
+        <option value="">Industry / segment</option>
+        <option>Automotive</option>
+        <option>Textile</option>
+        <option>Food Processing</option>
+        <option>Pharma</option>
+        <option>Ceramics</option>
+        <option>Chemicals</option>
+        <option>Glass</option>
+        <option>Manufacturing</option></select
+      ><select [(ngModel)]="status" (ngModelChange)="resetPage()">
+        <option value="">Contract status</option>
+        <option>Active</option>
+        <option>Renewal due</option>
+        <option>Expiring soon</option></select
+      ><select [(ngModel)]="location" (ngModelChange)="resetPage()">
+        <option value="">All locations</option>
+        <option *ngFor="let c of customers" [value]="c.location">
+          {{ c.location }}
+        </option></select
+      ><button class="text-btn" (click)="clearFilters()">Clear</button>
+    </div>
+  </section>
+
+  <section class="table-card">
+    <div class="table-bar">
+      <strong>Customer Directory & Consumption</strong>
+      <span>{{ filtered.length }} customers found</span>
+      <label>Sort by
+        <select [(ngModel)]="sort">
+          <option value="name">Customer name</option>
+          <option value="expiry">Contract expiry</option>
+          <option value="dcq">DCQ</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer Name</th>
+            <th>Customer Status</th>
+            <th>Agreement Expiry</th>
+            <th>Daily SCM</th>
+            <th>MMBTU (&#64; {{ masterGcv }} GCV)</th>
+            <th>Daily Communication</th>
+            <th>Last Sent Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of displayed">
+            <td>
+              <a [routerLink]="['/marketing/existing-customers', c.id]">{{ c.name }}</a>
+              <small>{{ c.location }}</small>
+            </td>
+            <td>
+              <span class="badge" [class.success]="getCustomerStatusLabel(c.contractStatus) === 'Commissioned'" [class.warn]="getCustomerStatusLabel(c.contractStatus) !== 'Commissioned'">
+                {{ getCustomerStatusLabel(c.contractStatus) }}
+              </span>
+            </td>
+            <td>{{ c.expiry }}</td>
+            <td class="fw-semibold text-primary">
+              <span *ngIf="c.scdValue > 0">{{ c.scdValue | number }} SCM</span>
+              <span *ngIf="c.scdValue === 0" class="text-muted">0 SCM (Uncommissioned)</span>
+            </td>
+            <td class="fw-bold text-success">
+              <span *ngIf="c.mmbtuValue > 0">{{ c.mmbtuValue }} MMBTU</span>
+              <span *ngIf="c.mmbtuValue === 0" class="text-muted">0 MMBTU</span>
+            </td>
+            <td>
+              <label class="switch-container" *ngIf="c.contractStatus === 'Active' || c.contractStatus === 'Expiring soon'">
+                <input type="checkbox" [checked]="c.dailyCommunication" (change)="toggleDailyCommunication(c, $event)">
+                <span class="slider round"></span>
+                <span class="switch-label-text ms-2">{{ c.dailyCommunication ? 'ON' : 'OFF' }}</span>
+              </label>
+              <span *ngIf="c.contractStatus === 'Renewal due'" class="text-muted small">N/A</span>
+            </td>
+            <td>
+              <span class="status-pill" [class.pill-success]="c.lastSentDate !== '—'" [class.pill-muted]="c.lastSentDate === '—'">
+                {{ c.lastSentDate }}
+              </span>
+            </td>
+            <td>
+              <a class="row-action" [routerLink]="['/marketing/existing-customers', c.id]">
+                View <i class="ri-arrow-right-line"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <span>Showing {{ displayed.length }} of {{ filtered.length }} customers</span>
+      <div>
+        <button [disabled]="page === 1" (click)="page = page - 1">
+          <i class="ri-arrow-left-s-line"></i>
+        </button>
+        <span>Page {{ page }} of {{ pages }}</span>
+        <button [disabled]="page === pages" (click)="page = page + 1">
+          <i class="ri-arrow-right-s-line"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

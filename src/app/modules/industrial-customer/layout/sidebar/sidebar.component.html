@@ -1,0 +1,47 @@
+<!-- Mobile Header & Toggle -->
+<div class="mobile-header" *ngIf="isMobile">
+  <div class="brand-mobile">
+    <div class="logo-icon-small">
+      <img src="assets/images/torrent_logo.png" alt="Torrent Gas Icon" />
+    </div>
+    <img src="assets/images/torrent_text.png" alt="Torrent Gas" class="brand-text-img" />
+  </div>
+  <button class="mobile-toggle" (click)="toggleSidebar()">
+    <i [class]="isSidebarOpen ? 'ri-close-line' : 'ri-menu-line'"></i>
+  </button>
+</div>
+
+<!-- Overlay for mobile -->
+<div class="sidebar-overlay" *ngIf="isMobile && isSidebarOpen" (click)="toggleSidebar()"></div>
+
+<!-- Main Sidebar Container -->
+<aside class="sidebar-container" [class.open]="isSidebarOpen">
+  
+  <!-- Brand Area -->
+  <div class="sidebar-header">
+    <div class="brand-wrapper">
+      <div class="brand-text">
+        <span class="brand-subtitle">Consumer Portal</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="sidebar-scroll-area">
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">MAIN MENU</div>
+      <ul class="nav-list">
+        <li class="nav-item" *ngFor="let item of menuItems">
+          <a 
+            [routerLink]="item.route" 
+            routerLinkActive="active" 
+            class="nav-link"
+            (click)="isMobile ? toggleSidebar() : null">
+            <i [class]="item.icon + ' nav-icon'"></i>
+            <span class="nav-label">{{ item.label }}</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>

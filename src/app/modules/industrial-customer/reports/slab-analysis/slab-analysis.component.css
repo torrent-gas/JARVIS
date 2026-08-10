@@ -1,0 +1,128 @@
+:host {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  display: block;
+  padding: 20px;
+}
+
+.industrial-dashboard {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* Header Styling */
+.brand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 20px 24px;
+  border-radius: 10px;
+  border-left: 6px solid #ff6600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.badge-torrent {
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff6600;
+  letter-spacing: 1px;
+}
+
+.brand-header h1 {
+  font-size: 22px;
+  margin: 4px 0 0 0;
+}
+
+/* KPI Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.kpi-card {
+  background: #ffffff;
+  padding: 18px 20px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #0f172a;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.kpi-card.accent-green {
+  border-left-color: #10b981;
+}
+
+.kpi-card.alert-card {
+  border-left-color: #ef4444;
+  background: #fff5f5;
+}
+
+.kpi-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.kpi-card h2 {
+  font-size: 24px;
+  margin: 8px 0 4px 0;
+  color: #0f172a;
+}
+
+.kpi-sub {
+  font-size: 12px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.text-danger {
+  color: #dc2626 !important;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #1e293b;
+}
+
+.tag {
+  font-size: 11px;
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.chart-container-large {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}

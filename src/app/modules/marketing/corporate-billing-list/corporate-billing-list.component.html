@@ -1,0 +1,266 @@
+<div class="corporate-portal-container">
+
+  <!-- ================= VIEW 1: CORPORATE LEVEL BILLING & EXPOSURE DASHBOARD ================= -->
+  <div *ngIf="!selectedCustomer">
+    
+    <header class="portal-header">
+      <span class="badge-torrent">TORRENT GAS - CORPORATE FINANCIAL PORTAL</span>
+      <h1>Industrial Bills, Payments & Exposure Monitoring</h1>
+      <p class="text-muted">Real-time tracking of customer billings, payment security (BGs), and financial risk exposure.</p>
+    </header>
+
+    <!-- Section 15: Corporate-Level Summary KPI Cards -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-title">Total Customers</span>
+        <h2>{{ totalCustomers }}</h2>
+        <span class="kpi-sub">Active Industrial Portals</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-title">Total Outstanding</span>
+        <h2>₹ {{ totalOutstandingCrores }} Cr</h2>
+        <span class="kpi-sub text-danger">Overdue: ₹ {{ totalOverdueCrores }} Cr</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-title">Total Payment Security</span>
+        <h2>₹ {{ totalSecurityCrores }} Cr</h2>
+        <span class="kpi-sub text-success">Active BGs & Deposits</span>
+      </div>
+      <div class="kpi-card alert-card">
+        <span class="kpi-title">Customers Over Exposed</span>
+        <h2 class="text-danger">{{ overExposedCount }}</h2>
+        <span class="kpi-sub text-danger">Requires Immediate Action</span>
+      </div>
+      <div class="kpi-card warning-card">
+        <span class="kpi-title">Customers Near Limit</span>
+        <h2 class="text-warning">{{ nearLimitCount }}</h2>
+        <span class="kpi-sub">Approaching BG Threshold</span>
+      </div>
+    </section>
+
+    <!-- Risk Distribution Bar -->
+    <div class="card p-3 mb-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <span class="fw-bold text-dark">Portfolio Risk Breakdown:</span>
+        <div class="d-flex gap-3">
+          <span class="badge badge-success-custom">Within Limit: {{ withinLimitCount }}</span>
+          <span class="badge badge-warning-custom">Near Limit (≥80%): {{ nearLimitCount }}</span>
+          <span class="badge badge-danger-custom">Over Exposure: {{ overExposedCount }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="card p-4 mb-4">
+      <div class="filter-row">
+        <div class="form-group flex-grow">
+          <label>Search Customer</label>
+          <input type="text" [(ngModel)]="searchQuery" (input)="applyFilters()" placeholder="Search by customer name or ID..." class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Exposure Status Filter</label>
+          <select [(ngModel)]="statusFilter" (change)="applyFilters()" class="form-control">
+            <option value="All">All Exposure Statuses</option>
+            <option value="Within Limit">✓ Within Limit</option>
+            <option value="Near Limit">⚠ Near Limit</option>
+            <option value="Over Exposure">🔴 Over Exposure</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1: Customer List Table -->
+    <div class="card p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="card-title mb-0">Industrial Customer Financial Profiles</h3>
+        <span class="tag">Click customer row for deep-dive financials</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table modern-table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Current Bill</th>
+              <th>Payment Security</th>
+              <th>Exposure Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of filteredProfiles" (click)="selectCustomer(p)" class="clickable-row">
+              <td>
+                <div class="fw-bold text-dark">{{ p.customerName }}</div>
+                <small class="text-muted">ID: {{ p.customerId }}</small>
+              </td>
+              <td class="fw-semibold">₹ {{ p.currentBill }} L</td>
+              <td class="fw-semibold text-success">₹ {{ getTotalSecurity(p) }} L</td>
+              <td>
+                <span class="status-pill" [ngClass]="getExposureStatus(p).class">
+                  {{ getExposureStatus(p).label }}
+                </span>
+              </td>
+              <td>
+                <button class="btn-sm btn-outline-primary" (click)="selectCustomer(p); $event.stopPropagation()">View Details</button>
+              </td>
+            </tr>
+            <tr *ngIf="filteredProfiles.length === 0">
+              <td colspan="6" class="text-center py-4 text-muted">No industrial customer profiles match the filter criteria.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ================= VIEW 2: INDIVIDUAL CUSTOMER BILLING & EXPOSURE DETAILS ================= -->
+  <div *ngIf="selectedCustomer">
+
+    <div class="mb-3">
+      <button class="btn-back" (click)="backToList()">
+        <i class="ri-arrow-left-line"></i> Back to All Customers
+      </button>
+    </div>
+
+    <header class="portal-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+      <div>
+        <span class="badge-torrent">CUSTOMER FINANCIAL DOSSIER</span>
+        <h1>{{ selectedCustomer.customerName }}</h1>
+        <p class="text-muted mb-0">Customer ID: <strong>{{ selectedCustomer.customerId }}</strong></p>
+      </div>
+      <div>
+        <span class="status-pill status-pill-lg" [ngClass]="getExposureStatus(selectedCustomer).class">
+          {{ getExposureStatus(selectedCustomer).label }}
+        </span>
+      </div>
+    </header>
+
+    <!-- Section 13: Customer-Level Navigation Tabs -->
+    <div class="nav-tabs-custom mb-4">
+      <button [class.active]="activeTab === 'Overview'" (click)="setActiveTab('Overview')">Overview</button>
+      <button [class.active]="activeTab === 'Exposure'" (click)="setActiveTab('Exposure')">Exposure</button>
+    </div>
+
+
+    <!-- TAB 1: OVERVIEW & EXPOSURE ANALYSIS -->
+    <div *ngIf="activeTab === 'Exposure'">
+      
+      <!-- Section 3: Customer Billing Overview KPIs -->
+      <section class="kpi-grid mb-4">
+        <div class="kpi-card">
+          <span class="kpi-title">Current Bill</span>
+          <h2>₹ {{ selectedCustomer.currentBill }} L</h2>
+          <span class="kpi-sub">August 2026 Cycle</span>
+        </div>
+        
+        <div class="kpi-card">
+          <span class="kpi-title">Payment Security</span>
+          <h2>₹ {{ getTotalSecurity(selectedCustomer) }} L</h2>
+          <span class="kpi-sub text-success">Active BGs & Deposits</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-title">Available Security</span>
+          <h2 [class.text-danger]="getTotalSecurity(selectedCustomer) < selectedCustomer.currentBill">
+            ₹ {{ getTotalSecurity(selectedCustomer) - selectedCustomer.currentBill >= 0 ? +(getTotalSecurity(selectedCustomer) - selectedCustomer.currentBill).toFixed(2) : 0 }} L
+          </h2>
+          <span class="kpi-sub">Unutilized Cushion</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-title">Current Exposure</span>
+          <h2>₹ {{ selectedCustomer.outstanding }} L</h2>
+          <span class="kpi-sub">Against Security Held</span>
+        </div>
+      </section>
+
+      <!-- Section 6 & 7: Exposure Analysis & Over-Exposure Warning -->
+      <div class="dashboard-grid">
+        
+        <div class="card p-4">
+          <h3 class="section-heading">Payment Security Utilization</h3>
+          
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="fw-semibold">Utilization Ratio</span>
+              <span class="fw-bold">{{ ((selectedCustomer.outstanding / getTotalSecurity(selectedCustomer)) * 100).toFixed(1) }}%</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" 
+                   [style.width.%]="(selectedCustomer.outstanding / getTotalSecurity(selectedCustomer)) * 100"
+                   [class.bg-danger]="selectedCustomer.outstanding > getTotalSecurity(selectedCustomer)"
+                   [class.bg-warning]="selectedCustomer.outstanding <= getTotalSecurity(selectedCustomer) && ((selectedCustomer.outstanding / getTotalSecurity(selectedCustomer)) * 100) >= 80"
+                   [class.bg-success]="selectedCustomer.outstanding <= getTotalSecurity(selectedCustomer) && ((selectedCustomer.outstanding / getTotalSecurity(selectedCustomer)) * 100) < 80">
+              </div>
+            </div>
+          </div>
+
+          <!-- Over Exposure Alert Banner if applicable (Requirement 7) -->
+          <div class="alert-banner" *ngIf="selectedCustomer.outstanding > getTotalSecurity(selectedCustomer)">
+            <i class="ri-alert-fill text-danger fs-4"></i>
+            <div>
+              <h5 class="fw-bold text-danger mb-1">⚠ Over Exposure Risk Detected</h5>
+              <p class="mb-0 small text-secondary">
+                Outstanding amount (₹ {{ selectedCustomer.outstanding }} L) exceeds total payment security (₹ {{ getTotalSecurity(selectedCustomer) }} L) by <strong>₹ {{ selectedCustomer.outstanding - getTotalSecurity(selectedCustomer) }} Lakhs unsecured exposure</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="alert-banner alert-success-custom" *ngIf="selectedCustomer.outstanding <= getTotalSecurity(selectedCustomer)">
+            <i class="ri-checkbox-circle-fill text-success fs-4"></i>
+            <div>
+              <h5 class="fw-bold text-success mb-1">Within Secure Limit</h5>
+              <p class="mb-0 small text-secondary">
+                Customer's financial exposure is fully covered by active Bank Guarantees and Security Deposits.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Outstanding Details & Section 12: Financial Risk Summary -->
+        <div class="card p-4">
+          <h3 class="section-heading">Financial Risk & Outstanding Aging</h3>
+          
+          <table class="table table-sm details-table mb-3">
+            <tr>
+              <td class="text-muted">Total Outstanding:</td>
+              <td class="fw-bold">₹ {{ selectedCustomer.outstanding }} Lakhs</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Overdue Amount:</td>
+              <td>₹ {{ selectedCustomer.overdueAmount }} Lakhs</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Not Yet Due:</td>
+              <td>₹ {{ selectedCustomer.notYetDueAmount }} Lakhs</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Overdue Invoices:</td>
+              <td>{{ selectedCustomer.overdueInvoicesCount }} Invoices</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Oldest Outstanding:</td>
+              <td class="fw-bold text-danger">{{ selectedCustomer.oldestOutstandingDays }} Days</td>
+            </tr>
+          </table>
+
+          <div class="p-3 bg-light rounded border">
+            <h6 class="fw-bold mb-1">Risk Summary Assessment</h6>
+            <p class="small text-muted mb-0">Customer maintaining active credit interaction with an average payment aging of {{ selectedCustomer.oldestOutstandingDays }} days. Monitor BG renewal cycles closely.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TAB 2: BILLS HISTORY -->
+    <div *ngIf="activeTab === 'Overview'">
+      <app-billing-payments></app-billing-payments>
+    </div>
+
+
+  </div>
+
+</div>

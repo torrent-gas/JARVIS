@@ -1,0 +1,40 @@
+<header class="topbar-container">
+  
+  <!-- Left: Official Brand Logo -->
+  <div class="brand-section">
+    <img src="assets/images/torrent_text.png" alt="Torrent Gas Text" class="logo-text" 
+         onerror="this.style.display='none'; this.previousElementSibling.style.display='block'">
+
+    <!-- Fallback if images fail to load -->
+    <div class="fallback-logo" style="display: none;">
+      <i class="ri-fire-fill text-green"></i>
+      <span class="brand-text torrent_text">Torrent <strong>Gas</strong></span>
+    </div>
+  </div>
+
+  <!-- Right: Global Data & User Profile -->
+  <div class="topbar-actions">
+    
+    <!-- Always Visible Customer ID -->
+    <div class="customer-id-badge">
+      <i class="ri-fingerprint-line"></i>
+      <div class="badge-content">
+        <span class="badge-label">Employee ID</span>
+        <span class="badge-value">{{ customerId }}</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- User Profile Dropdown Area -->
+    <div class="user-profile-trigger">
+      <div class="user-info">
+        <span class="user-name">{{ currentUser.name }}</span>
+        <span class="user-role">Torrent</span>
+      </div>
+      <div class="avatar">{{ currentUser.avatar }}</div>
+      <i class="ri-arrow-down-s-line chevron"></i>
+    </div>
+    
+  </div>
+</header>

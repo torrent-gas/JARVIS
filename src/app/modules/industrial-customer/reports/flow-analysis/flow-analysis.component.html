@@ -1,0 +1,64 @@
+<div class="industrial-dashboard" [class.embedded]="embedded">
+  
+  <!-- Corporate Header -->
+  <header class="brand-header" *ngIf="!embedded">
+    <div class="logo-area">
+      <h1>Industrial Gas Consumption & Analytics</h1>
+      <p class="customer-subtitle text-muted mt-1">Customer: <strong>{{ customerName }}</strong> (August 2026)</p>
+    </div>
+  </header>
+
+  <!-- Conditional Low-Efficiency Warning Alert (Triggers if Efficiency < 90%) -->
+  <div class="alert-banner warning-banner mb-4" *ngIf="isLowEfficiency">
+    <div class="d-flex align-items-center gap-3">
+      <div class="alert-icon-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div>
+        <h5 class="mb-1 fw-bold text-dark">Take-or-Pay Utilization Warning</h5>
+        <p class="mb-0 text-muted small">
+          Your current monthly average consumption efficiency is at <strong>{{ efficiencyValue }}%</strong>, which is below the mandated 90% threshold of your Contracted Capacity (DCQ). Operating below this level may attract under-utilization penalties as per Torrent Gas industrial tariff agreements.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-banner warning-banner mb-4" *ngIf="isMaxFlowAlert">
+    <div class="d-flex align-items-center gap-3">
+      <div class="alert-icon-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <div>
+        <h5 class="mb-1 fw-bold text-dark">Maximum Flow Rate Alert</h5>
+        <p class="mb-0 text-muted small">
+          Your current maximum flow rate is at <strong>{{ peakDemand }} SCM/hr</strong>, which exceeds the allowed threshold (<strong>{{ maxFlowValue }} SCM/hr</strong>). Please review your usage patterns to ensure compliance.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Metrics Grid -->
+  <section class="kpi-grid">
+    <div
+      class="kpi-card"
+      *ngFor="let kpi of kpis"
+      [class.alert-card]="kpi.alert"
+    >
+      <span class="kpi-title">{{ kpi.title }}</span>
+      <h2>{{ kpi.value }}</h2>
+      <span class="kpi-sub" [class.text-danger]="kpi.alert">{{ kpi.sub }}</span>
+    </div>
+  </section>
+
+  <!-- Row 1: Daily Trends & MMBTU Conversion Tracking -->
+  <div class="dashboard-grid">
+    <div class="card">
+      <div class="card-header">
+        <h3>Daily Gas Consumption Trend</h3>
+        <span class="tag">Track Daily Usage (MMBTU & Peak Flow)</span>
+      </div>
+      <div class="chart-container"><canvas #dailyCanvas></canvas></div>
+    </div>
+  </div>
+
+</div>

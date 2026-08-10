@@ -1,0 +1,18 @@
+<div class="reports-page">
+  <div class="crumb">
+    <a routerLink="/marketing/existing-customers">Existing Customers</a
+    ><i class="ri-arrow-right-s-line"></i
+    ><a [routerLink]="['/marketing/existing-customers', customer.id]">{{
+      customer.name
+    }}</a
+    ><i class="ri-arrow-right-s-line"></i><span>Reports</span
+    ><i class="ri-arrow-right-s-line" *ngIf="selected !== 'overview'"></i
+    ><span *ngIf="selected !== 'overview'">{{ reportTitle() }}</span>
+  </div>
+  
+  <div >
+    <main>
+      <app-report-container></app-report-container>
+    </main>
+  </div>
+</div>

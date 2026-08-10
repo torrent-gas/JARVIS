@@ -1,0 +1,130 @@
+<div class="page-container">
+  
+  <!-- Page Header -->
+  <div class="page-header slide-down">
+    <div class="header-text">
+      <div class="header-title-row">
+        <h2>Contract Summary</h2>
+        <span class="status-badge"><i class="ri-checkbox-circle-fill"></i> {{ contractData.contractTerms.status }}</span>
+      </div>
+      <p>Verified commercial gas supply agreement details for Torrent Gas portal records.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-primary" (click)="downloadContractPdf()">
+        <i class="ri-file-download-line"></i> Download Signed Contract
+      </button>
+    </div>
+  </div>
+
+  <div class="content-wrapper">
+    
+    <!-- SECTION 1: Company Profile -->
+    <div class="display-section card-fade-in">
+      <div class="section-header">
+        <i class="ri-building-4-line text-blue"></i>
+        <h3>Company Information</h3>
+      </div>
+      
+      <div class="data-grid">
+        <div class="data-item col-span-2">
+          <span class="data-label">Company Name</span>
+          <span class="data-value highlight">{{ contractData.companyInfo.companyName }}</span>
+        </div>
+        
+        <div class="data-item col-span-2">
+          <span class="data-label">Registered Office Address</span>
+          <span class="data-value">{{ contractData.companyInfo.companyAddress }}</span>
+        </div>
+        
+        <div class="data-item">
+          <span class="data-label">Registered Email</span>
+          <span class="data-value"><i class="ri-mail-line icon-subtle"></i> {{ contractData.companyInfo.registeredMail }}</span>
+        </div>
+        
+        <div class="data-item">
+          <span class="data-label">Registered Phone Number</span>
+          <span class="data-value"><i class="ri-phone-line icon-subtle"></i> {{ contractData.companyInfo.registeredPhone }}</span>
+        </div>
+        
+        <div class="data-item">
+          <span class="data-label">Agreement Signed Date</span>
+          <span class="data-value"><i class="ri-calendar-event-line icon-subtle"></i> {{ contractData.companyInfo.agreementDate }}</span>
+        </div>
+        
+        <div class="data-item">
+          <span class="data-label">Commissioned Date</span>
+          <span class="data-value"><i class="ri-calendar-check-line icon-subtle"></i> {{ contractData.companyInfo.commissionedDate }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Contract Terms -->
+    <div class="display-section card-fade-in delay-1">
+      <div class="section-header">
+        <i class="ri-file-shield-2-line text-green"></i>
+        <h3>Commercial & Operational Terms</h3>
+      </div>
+      
+      <div class="data-grid grid-3-cols">
+        
+        <div class="data-item">
+          <span class="data-label">Category</span>
+          <span class="data-value">{{ contractData.contractTerms.category }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">Type of Contract</span>
+          <span class="data-value">{{ contractData.contractTerms.contractType }}</span>
+        </div>
+
+        <!-- Metric Items -->
+        <div class="data-item">
+          <span class="data-label">DCQ (Daily Contracted Qty)</span>
+          <span class="data-value metric-text">{{ contractData.contractTerms.dcq }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">MDCQ (Max Daily Qty)</span>
+          <span class="data-value metric-text">{{ contractData.contractTerms.mdcq }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">MGO (Min Guaranteed Offtake)</span>
+          <span class="data-value metric-text">{{ contractData.contractTerms.mgo }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">MGO Obligation</span>
+          <span class="data-value">{{ contractData.contractTerms.mgoObligation }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">Excess Limit</span>
+          <span class="data-value">{{ contractData.contractTerms.excessLimit }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">Excess Limit Criteria</span>
+          <span class="data-value">{{ contractData.contractTerms.excessLimitCriteria }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">Meter Type</span>
+          <span class="data-value">{{ contractData.contractTerms.meterType }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">Delivery Pressure</span>
+          <span class="data-value">{{ contractData.contractTerms.deliveryPressure }}</span>
+        </div>
+
+        <div class="data-item">
+          <span class="data-label">Maximum Allowable Flow Rate</span>
+          <span class="data-value">{{ contractData.contractTerms.maximumAllowableFlowRate }}</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    
+    <!-- Branding & Context Header -->
+    <div class="login-header">
+      <div class="brand-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <h2>Enterprise Portal</h2>
+      <p class="login-subtitle">Signing in to <strong>{{ loginTypeLabel }}</strong></p>
+    </div>
+
+    <!-- Main Authentication Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      
+      <!-- Global Error Alert -->
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+
+      <!-- User ID Input -->
+      <div class="form-group">
+        <label for="userId">User ID / Employee Code</label>
+        <div class="input-container">
+          <input 
+            type="text" 
+            id="userId" 
+            formControlName="userId" 
+            placeholder="Enter your User ID"
+            [class.is-invalid]="f['userId'].touched && f['userId'].invalid" />
+        </div>
+        <div *ngIf="f['userId'].touched && f['userId'].invalid" class="error-feedback">
+          <span *ngIf="f['userId'].errors?.['required']">User ID is required.</span>
+          <span *ngIf="f['userId'].errors?.['minlength']">Must be at least 3 characters.</span>
+        </div>
+      </div>
+
+      <!-- Password Input -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-container password-container">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password" 
+            formControlName="password" 
+            placeholder="Enter your password"
+            [class.is-invalid]="f['password'].touched && f['password'].invalid" />
+          
+          <button 
+            type="button" 
+            class="toggle-password" 
+            (click)="togglePasswordVisibility()" 
+            tabindex="-1">
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        <div *ngIf="f['password'].touched && f['password'].invalid" class="error-feedback">
+          <span *ngIf="f['password'].errors?.['required']">Password is required.</span>
+          <span *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters.</span>
+        </div>
+      </div>
+
+      <!-- Remember Me & Forgot Password Utilities -->
+      <div class="form-utilities">
+        <label class="checkbox-container">
+          <input type="checkbox" formControlName="rememberMe" />
+          <span class="checkmark"></span>
+          Remember session
+        </label>
+        <a routerLink="/forgot-password" class="forgot-link">Forgot Password?</a>
+      </div>
+
+      <!-- Submit Action Button -->
+      <button type="submit" class="btn-submit" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Sign In</span>
+        <span *ngIf="isLoading" class="spinner">Authenticating...</span>
+      </button>
+
+    </form>
+
+    <!-- Security Footer Footer -->
+    <div class="login-footer">
+      <p>Authorized personnel only. All access monitored and logged.</p>
+    </div>
+
+  </div>
+</div>

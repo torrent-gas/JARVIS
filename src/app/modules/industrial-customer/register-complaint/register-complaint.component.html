@@ -1,0 +1,154 @@
+<div class="page-container">
+  
+  <div class="page-header slide-down">
+    <div class="header-text">
+      <h2>Support & Complaints</h2>
+      <p>Log an issue or service request. Our technical team is available 24/7 for industrial consumers.</p>
+    </div>
+  </div>
+
+  <div class="layout-grid">
+    
+    <!-- LEFT COLUMN: The Form -->
+    <div class="form-column card-fade-in">
+      
+      <!-- Success State -->
+      <div class="success-state slide-down" *ngIf="ticketGenerated">
+        <div class="success-icon"><i class="ri-checkbox-circle-fill"></i></div>
+        <h3>Complaint Registered Successfully</h3>
+        <p>Your ticket reference number is <strong>{{ ticketGenerated }}</strong>. An automated notification email has been dispatched to the assigned industrial support team.</p>
+        <button class="btn-outline mt-4" (click)="resetForm()">Raise Another Ticket</button>
+      </div>
+
+      <!-- Main Form -->
+      <form [formGroup]="complaintForm" (ngSubmit)="onSubmit()" *ngIf="!ticketGenerated">
+        
+        <!-- Emergency Alert Banner -->
+        <div class="emergency-banner slide-down" *ngIf="isEmergency">
+          <i class="ri-alert-fill banner-icon"></i>
+          <div class="banner-content">
+            <h4>Safety First: Gas Leak / Emergency</h4>
+            <p>For immediate assistance with gas leaks, do not wait for a ticket response. Please evacuate the area and immediately call our 24/7 Emergency Control Room: <strong>1800-XXX-XXXX</strong>.</p>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">Issue Details</h3>
+          
+          <div class="input-grid">
+            <div class="form-group">
+              <label>Category <span class="required">*</span></label>
+              <select formControlName="category" class="form-control" [class.is-invalid]="complaintForm.get('category')?.touched && complaintForm.get('category')?.invalid">
+                <option value="" disabled selected>Select issue type</option>
+                <option *ngFor="let cat of complaintCategories" [value]="cat.id">{{ cat.name }}</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Priority <span class="required">*</span></label>
+              <select formControlName="priority" class="form-control">
+                <option value="Low">Low (General Query)</option>
+                <option value="Medium">Medium (Standard Issue)</option>
+                <option value="High">High (Impacting Operations)</option>
+                <option value="Critical" [disabled]="!isEmergency">Critical (Emergency)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Subject <span class="required">*</span></label>
+            <input type="text" formControlName="subject" class="form-control" placeholder="Brief summary of the issue" [class.is-invalid]="complaintForm.get('subject')?.touched && complaintForm.get('subject')?.invalid">
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Detailed Description <span class="required">*</span></label>
+            <textarea formControlName="description" class="form-control textarea" rows="4" placeholder="Please provide exact meter readings, error codes, or physical observations..."></textarea>
+          </div>
+
+          <!-- Drag and Drop File Upload -->
+          <div class="form-group mt-3">
+            <label>Attachments (Optional)</label>
+            <div class="upload-zone" [class.has-file]="uploadedFileName">
+              <input type="file" class="file-input" (change)="onFileSelected($event)" accept="image/*,.pdf">
+              
+              <div class="upload-content" *ngIf="!uploadedFileName">
+                <i class="ri-cloud-upload-line upload-icon"></i>
+                <span class="upload-title">Click or drag file to this area to upload</span>
+                <span class="upload-subtitle">Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files.</span>
+              </div>
+
+              <div class="file-preview" *ngIf="uploadedFileName">
+                <i class="ri-file-text-line file-icon"></i>
+                <span class="file-name">{{ uploadedFileName }}</span>
+                <button type="button" class="btn-remove-file" (click)="removeFile(); $event.stopPropagation()">
+                  <i class="ri-close-line"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section mt-4">
+          <h3 class="section-title">Point of Contact</h3>
+          <div class="input-grid">
+            <div class="form-group">
+              <label>Contact Person</label>
+              <input type="text" formControlName="contactName" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="text" formControlName="contactPhone" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions mt-4">
+          <button type="button" class="btn-outline" (click)="complaintForm.reset()">Clear Form</button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting || complaintForm.invalid">
+            <span *ngIf="!isSubmitting">Submit Ticket <i class="ri-send-plane-line ml-2"></i></span>
+            <span *ngIf="isSubmitting"><i class="ri-loader-4-line spin mr-2"></i> Sending & Submitting...</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- RIGHT COLUMN: SLA & Help Info -->
+    <div class="info-column card-fade-in delay-1">
+      
+      <div class="info-card">
+        <h3>Support SLAs</h3>
+        <p class="text-sm text-muted">Response times for Industrial Consumers based on priority.</p>
+        
+        <ul class="sla-list">
+          <li>
+            <div class="sla-badge critical">Critical</div>
+            <div class="sla-time">Immediate (Within 1 Hr)</div>
+          </li>
+          <li>
+            <div class="sla-badge high">High</div>
+            <div class="sla-time">Within 4 Hours</div>
+          </li>
+          <li>
+            <div class="sla-badge medium">Medium</div>
+            <div class="sla-time">Within 24 Hours</div>
+          </li>
+          <li>
+            <div class="sla-badge low">Low</div>
+            <div class="sla-time">Within 48 Hours</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-card mt-4">
+        <div class="contact-icon"><i class="ri-customer-service-2-line"></i></div>
+        <div class="contact-details">
+          <h4>Need immediate help?</h4>
+          <span class="phone">1800-890-4321</span>
+          <span class="email">industrial.support&#64;torrentgas.com</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

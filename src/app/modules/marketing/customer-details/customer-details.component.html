@@ -1,0 +1,20 @@
+<div class="detail-page">
+  <div class="crumb">
+    <a routerLink="/marketing/existing-customers">Existing Customers</a
+    ><i class="ri-arrow-right-s-line"></i><span>{{ customer.name }}</span>
+  </div>
+  <div class="section-nav">
+    <a href="#overview">Overview</a>
+    <a
+      [routerLink]="['/marketing/existing-customers', customer.id, 'reports']"
+      class="reports-link"
+      ><i class="ri-bar-chart-box-line"></i> Reports</a
+    >
+  </div>
+
+  <div class="layout">
+    <main>
+      <app-contracts></app-contracts>
+    </main>
+  </div>
+</div>

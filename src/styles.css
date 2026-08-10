@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'remixicon/fonts/remixicon.css';
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+*{
+    font-family: 'Google Sans Flex' !important;
+}
+
+body{
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+
+}
+
+.map-icon { background: transparent; border: 0; }
+.drs-marker, .target-marker { width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: grid; place-items: center; color: #fff; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(22, 45, 68, .35); }
+.drs-marker { background: #0a609d; }
+.target-marker { background: #dc4343; }
+.drs-marker i, .target-marker i { transform: rotate(45deg); font-size: 15px; }

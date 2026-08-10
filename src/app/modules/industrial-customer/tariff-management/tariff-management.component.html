@@ -1,0 +1,73 @@
+<div class="dashboard-wrapper">
+  <main class="container-fluid px-4 py-4">
+    <!-- Simple Heading Container -->
+<div class="simple-section-heading mb-4">
+  <h4 class="fw-bold text-dark mb-1">Current Billing Cycle Pricing (August-26)</h4>
+  <p class="text-muted small mb-0">Active tariff rates for the current active month.</p>
+</div>
+
+    <!-- KPI Metrics Array (Horizontal Grid Layout for Pricing) -->
+    <div class="kpi-grid-container mb-5">
+      <div
+        class="kpi-card h-100"
+        *ngFor="let kpi of kpis"
+        [class.accent-green]="kpi.isGreen"
+      >
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="kpi-title">{{ kpi.title }}</span>
+          <i
+            [class]="kpi.icon + ' kpi-icon'"
+            [class.text-success]="kpi.isGreen"
+          ></i>
+        </div>
+
+        <div class="kpi-price-row">
+          <!-- MMBTU (Primary) -->
+          <div class="price-block">
+            <span class="kpi-label-xs">Primary Rate</span>
+            <div class="kpi-value-mmbtu">{{ kpi.mmbtuValue }}</div>
+            <span class="kpi-unit-label">per MMBTU</span>
+          </div>
+
+          <div class="kpi-vertical-divider"></div>
+
+          <!-- SCM (Secondary/Below) -->
+          <div class="price-block text-end">
+            <span class="kpi-label-xs">Equivalent Rate &#64;9880 KCal/SCM</span>
+            <div class="kpi-value-scm">{{ kpi.scmValue }}</div>
+            <span class="kpi-unit-label">per SCM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics Row 1 -->
+    <div class="row g-4 mb-5">
+      <div class="col-12 col-xl-8">
+        <div class="dashboard-card h-100">
+          <div class="card-header-flex align-items-center">
+            <h5 class="card-title-modern">PNG Price Trend (₹ / MMBTU)</h5>
+
+            <!-- Timeframe Filter Dropdown -->
+            <div class="d-flex align-items-center gap-2">
+              <label class="form-label-xs mb-0 text-muted">Timeline:</label>
+              <select
+                class="form-select form-select-sm custom-select-filter"
+                [(ngModel)]="selectedTimeframe"
+                (change)="onTimeframeChange()"
+              >
+                <option value="6m">Last 6 Months</option>
+                <option value="1y">Last 1 Year</option>
+                <option value="2y">Last 2 Years</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="chart-container mt-3">
+            <canvas #historyCanvas></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
