@@ -33,6 +33,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/JARVIS/",
               "budgets": [
                 {
                   "type": "initial",
