@@ -17,22 +17,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: '20'
+        uses: actions/setup-node@v4 # Recommendation: Use v4 as v5 is not fully stabilized/released yet
 
       - name: Install dependencies
-        run: npm install
-        working-directory: client-app
+        run: npm ci # Recommendation: Faster, clean installs for CI environments
 
       - name: Build Angular app
         run: npm run build -- --configuration production
-        working-directory: client-app
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: client-app/dist/client-app
+          publish_dir: dist/client-app/browser # Note: Angular 17+ outputs to dist/<app-name>/browser
           publish_branch: gh-pages
           commit_message: Deploy from GitHub Actions
