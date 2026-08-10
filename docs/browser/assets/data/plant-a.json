@@ -1,0 +1,31 @@
+{
+  "plantName": "Plant A - Main Boiler Unit",
+  "kpis": [
+    { "title": "Today's Consumption", "value": "4,250 SCM", "sub": "+3.2% vs yesterday", "alert": false },
+    { "title": "Peak Demand", "value": "310 SCM/h", "sub": "Hit at 14:30 (Boiler #2)", "alert": true },
+    { "title": "Monthly Cumulative", "value": "1,12,400 SCM", "sub": "Budget Limit: 1,30,000 SCM", "alert": false },
+    { "title": "Efficiency Index", "value": "94.2%", "sub": "Optimal Burn Rate", "alert": false }
+  ],
+  "daily": {
+    "labels": ["Jun 01", "Jun 02", "Jun 03", "Jun 04", "Jun 05", "Jun 06", "Jun 07"],
+    "data": [4100, 3950, 4300, 4450, 4200, 4600, 4250]
+  },
+  "hourly": {
+    "labels": ["02:00", "04:00", "06:00", "08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"],
+    "data": [110, 100, 140, 220, 280, 290, 310, 270, 250, 190, 140]
+  },
+  "monthly": {
+    "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun (TD)"],
+    "actual": [110000, 105000, 115000, 120000, 118000, 112400],
+    "budget": [125000, 125000, 125000, 130000, 130000, 130000]
+  },
+  "department": {
+    "labels": ["Main Boiler Unit", "Thermic Fluid Heater", "Furnace Line 2", "Canteen / Utility"],
+    "data": [55, 25, 15, 5]
+  },
+  "shifts": [
+    { "name": "Shift A (06:00 - 14:00)", "usage": "1,420 SCM", "load": "75%", "status": "Normal" },
+    { "name": "Shift B (14:00 - 22:00)", "usage": "1,780 SCM", "load": "92%", "status": "Peak Load" },
+    { "name": "Shift C (22:00 - 06:00)", "usage": "1,050 SCM", "load": "55%", "status": "Wastage Detected" }
+  ]
+}
